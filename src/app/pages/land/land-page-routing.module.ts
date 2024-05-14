@@ -11,7 +11,7 @@ const routes: Routes = [
         path: '.',
         component: LandPageComponent,
         data: {
-          title: 'NextDoor'
+          title: 'F29 Agent'
         },
       }
     ]
