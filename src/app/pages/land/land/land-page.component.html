@@ -56,6 +56,14 @@
                        
                     </div>
                 </div>
+                <div class="col-12 mt-2 center-elements" *ngIf="!callingOpenai && !sending">
+                    <div class="d-block">
+                        <mat-slide-toggle [(ngModel)]="isComplexSearch">
+                            <span *ngIf="!isComplexSearch">Short answer</span>
+                            <span *ngIf="isComplexSearch">Long answer</span>
+                        </mat-slide-toggle>
+                    </div>
+                </div>
                 <div class="mt-3" *ngIf="questions.length>0 && !callingOpenai && messages.length == 0">
                     <span class="suggestion-items">
                         <span *ngFor="let suggestion of questions" class="suggestion-item">
@@ -64,6 +72,7 @@
                         </span>
                     </span>
                 </div>
+               
                 <div class="d-flex align-items-center input-container mt-3 mb-3" *ngIf="!callingOpenai">
                     <input type="text" [(ngModel)]="message" [disabled]="callingOpenai"
                         placeholder="{{'generics.Write a message' | translate }}..." (keydown.enter)="sendMessage()"
