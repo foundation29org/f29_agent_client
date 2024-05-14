@@ -1,0 +1,141 @@
+<!--Login Page Starts-->
+<section id="login">
+    <div class="container-fluid"><!-- gradient-red-pink-->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 text-center mt-3">
+                    <a class="linkbook" target="_blank" href="https://foundation29.org/">
+                        <img alt="F29" width="150px" class="img-fluid"
+                            src='https://foundation29.org/assets/img/logo-f29.webp' />
+                    </a>
+                </div>
+                <div class="col-md-6 text-header mt-3">
+                    <h3 class="text-bold-700 primary mb-0 mt-0">F29 Agent</h3>
+                    <p>Foundation29 project</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-xl-3 col-xl-6" style="height: fit-content;">
+            </div>
+            <div class="offset-xl-3 col-xl-6">
+                <div *ngIf="messages.length >0">
+                    <h5 class="text-muted mt-3">
+                        <button class="float-right btn btn-primary" (click)="deleteChat()"
+                            title="{{'generics.New Chat' | translate }}">
+                            <em class="fa fa-plus mr-1"></em> {{'generics.New Chat' | translate }}
+                        </button>
+                    </h5>
+                    <div class="chat-container mb-2">
+                        <div *ngFor="let message of messages; let i = index" class="chat-messages"
+                            [ngClass]="{'user-is-sender': message.isUser}">
+                            <div *ngIf="!message.isUser" class="ia-message-container mr-2 bg-white border"
+                                style="padding: 0.5rem;align-self: flex-start;border-radius: 1rem;">
+                                <img src="assets/img/iconchat.webp" />
+                            </div>
+                            <div class="message-row"
+                                [ngClass]="{'user-message': message.isUser, 'response-message': !message.isUser, 'response-form': !message.isUser}">
+                                <ng-container>
+                                    <span [innerHTML]="message.text | safe: 'html'"
+                                        (click)="onMessageClick($event, i)"></span>
+                                </ng-container>
+
+                            </div>
+                            <div *ngIf="message.isUser" [ngClass]="{'user-message': message.isUser}"
+                                class="ml-2 bg-primary white" style="padding: 0.5rem;">
+                                <strong>{{'generics.Me' | translate }}</strong>
+                            </div>
+                        </div>
+                        <div class="chat-messages pt-2" *ngIf="callingOpenai" style="border-radius: 1rem;">
+                            <span class="response-message font-small-3" style="background-color: white !important;"
+                                [innerHTML]="messagesExpectOutPut">
+                            </span>
+                            <em class="ml-1 fa fa-spinner fa-spin primary fa-fw" style="align-self: center;"></em>
+                        </div>
+
+                       
+                    </div>
+                </div>
+                <div class="mt-3" *ngIf="questions.length>0 && !callingOpenai && messages.length == 0">
+                    <span class="suggestion-items">
+                        <span *ngFor="let suggestion of questions" class="suggestion-item">
+                            <button class="btn btn-sm btn-outline-primary"
+                                (click)="selectSuggestion(suggestion)">{{suggestion.value}}</button>
+                        </span>
+                    </span>
+                </div>
+                <div class="d-flex align-items-center input-container mt-3 mb-3" *ngIf="!callingOpenai">
+                    <input type="text" [(ngModel)]="message" [disabled]="callingOpenai"
+                        placeholder="{{'generics.Write a message' | translate }}..." (keydown.enter)="sendMessage()"
+                        class="chat-input mt-0 border-0 mr-2 flex-grow-1">
+                    <button class="mr-1 btn btn-primary" style="padding: 0.2rem 0.57rem;" [disabled]="callingOpenai"
+                        (click)="sendMessage()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                            viewBox="0 0 256 256" class="h-4 w-auto">
+                            <path
+                                d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!--<div class="card round width-800 mt-4">
+                  <div class="card-body">
+                      <div class="card-block center-elements">
+                          <div class="row">
+                                <div class="col-12">
+                                <input type="text" class="form-control"
+                                    [placeholder]="('homeraito.Type a question in the text box' | translate)"
+                                    [(ngModel)]="query" (keyup.enter)="search()" [disabled]="sending">
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <div class="d-block" *ngIf="query!='' && !sending">
+                                        <mat-slide-toggle [(ngModel)]="isComplexSearch">
+                                            <span *ngIf="!isComplexSearch">Short answer</span>
+                                            <span *ngIf="isComplexSearch">Long answer</span>
+                                        </mat-slide-toggle>
+                                    </div>
+                                    <div class="d-block mb-2">
+                                        <button class="btn btn-outline-primary mt-2" [disabled]="sending" (click)="search()">
+                                            <span *ngIf="!sending">Search</span>
+                                            <span *ngIf="sending"><em class="fa fa-spinner fa-2x fa-spin fa-fw"></em></span>
+                                        </button>
+                                    </div>
+                                    <div class="d-block mt-4" *ngIf="query=='' && !sending">
+                                        <p class="text-bold-700 primary mb-0">If you don't know what to ask, we can suggest some questions for you:</p>
+                                        <div class="row">
+                                            <div *ngFor="let suggestion of questions" class="col-md-4">
+                                                <div class="card card-body card-custom d-flex justify-content-center align-items-center pointer" (click)="selectSuggestion(suggestion)">
+                                                    {{suggestion.value}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+                          <hr *ngIf="(!sending && responseLangchain!='') || searchopenai">
+                          <div class="mt-2" *ngIf="searchopenai">
+                            We couldn't find anything in the leaflets..
+                          </div>
+                          <div *ngIf="!sending && responseLangchain!=''" class="mt-3">
+                            <a id="initcontentIntro" class="anchorSteps"></a>
+                              <h4 class="text-bold-500 primary mt-3 mb-3">{{queryCopy}}</h4>
+                              <div class="row">
+                                  <div class="col-12">
+                                      <p [innerHTML]="responseLangchain"></p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 center-elements mt-3">
+                <p><em>This project has been possible thanks to the OpenAI language models</em></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Login Page Ends-->

@@ -1,0 +1,180 @@
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-messages.user-is-sender {
+  justify-content: flex-end;
+}
+
+.ia-message-container {
+  display: flex;
+  align-items: start; /* opcional, alinea los elementos al inicio verticalmente */
+}
+
+
+.user-message {
+  background-color: #ffc4c4;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: right;
+  word-wrap: break-word;
+  white-space: pre-line;
+  max-width: 95%; /* limita el ancho al 95% */
+  align-self: flex-end; /* alinea a la derecha */
+}
+
+.response-message {
+  background-color: lightgray;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  white-space: pre-line;
+  max-width: 95%; /* limita el ancho al 95% */
+  align-self: flex-start; /* alinea a la izquierda */
+}
+
+.response-message2 {
+  background-color: lightgray;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  white-space: pre-line;
+  max-width: 95%; /* limita el ancho al 95% */
+  align-self: flex-start; /* alinea a la izquierda */
+}
+
+.response-form {
+  border: 1px solid #E0E0E0 !important;
+  background-color: #f0f0f0;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  white-space: pre-line;
+  max-width: 95%; /* limita el ancho al 95% */
+  align-self: flex-start; /* alinea a la izquierda */
+}
+
+
+.input-container {
+  background-color: white;
+  padding: 7px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+  
+.btn-chat {
+  margin-left: 10px;
+}
+  
+  .chat-input,
+  .btn-chat {
+    width: 100%;
+    padding: 0.7rem;
+    box-sizing: border-box;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    border-radius: 1rem;
+  }
+  
+  .suggestion-items{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-flow: wrap;
+    gap: 100% 8px;
+    padding-left: 2px;
+    overflow-y: hidden;
+  }
+  
+  .suggestion-item{
+    display: block;
+    min-height: 34px;
+    margin-top: 0.4em;
+  }
+
+.card-custom{
+  padding: 1rem !important;
+  min-height: 100px;
+  border: 1px solid #f9423a !important;
+}
+
+::ng-deep h3{
+  margin-top: 1em !important;
+}
+
+
+::ng-deep table{
+  margin-bottom: 1em !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+::ng-deep th, td{
+  padding: 0.5em !important;
+}
+
+
+.card-custom:hover{
+  background-color: #eae9e9;
+}
+
+.text-header{
+  text-align: left;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+@media ( max-width: 768px ){
+  .card-custom {
+    min-height: auto !important;
+    padding: 0.5rem !important;
+    margin: 7px 0 !important;
+  }
+  .card-categorie{
+    display: block !important;
+    padding: 0.5rem !important;
+    margin: 7px 0 !important;
+  }
+  .card-categorie img {
+    display: block; /* Asegúrate de que la imagen también sea un bloque para centrarse correctamente */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+  }
+  .container {
+    text-align: center;
+}
+.row {
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-header{
+  text-align: center !important;
+}
+}
+
+
+@media ( max-width: 380px ){
+
+  .centerdiv{
+    clear: both;
+    float: none !important;
+  }
+}
