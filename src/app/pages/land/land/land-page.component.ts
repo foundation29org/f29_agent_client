@@ -23,6 +23,7 @@ export class LandPageComponent {
   isComplexSearch: boolean = false;
   questions: any = [];
   messages = [];
+  conversation: any = [];
   message = '';
   private intervalId: any;
   messagesExpect: string = '';
@@ -57,8 +58,9 @@ export class LandPageComponent {
     console.log(this.isComplexSearch)
     this.sending = true;
     this.searchopenai = false;
+    
     let query = { 
-      "question": this.query, "isComplexSearch": this.isComplexSearch
+      "conversation": this.conversation, "isComplexSearch": this.isComplexSearch, "question": this.query
    };
     this.responseLangchain = '';
     this.subscription.add(this.openAiService.postOpenAi3(query)
@@ -80,6 +82,8 @@ export class LandPageComponent {
                 text: this.responseLangchain,
                 isUser: false
               });
+              this.conversation.push({"role": "user", "content": this.message})
+              this.conversation.push({"role": "assistant", "content": res.choices[0].message.content})
               this.message= '';
               this.sending = false;
               this.scrollTo();
@@ -104,6 +108,8 @@ export class LandPageComponent {
             text: this.responseLangchain,
             isUser: false
           });
+          this.conversation.push({"role": "user", "content": this.message})
+          this.conversation.push({"role": "assistant", "content": res.data})
           this.message= '';
           console.log(this.sending)
           //this.scrollTo();
@@ -167,6 +173,7 @@ private statusChange() {
 
 async deleteChat() {
   this.messages = [];
+  this.conversation = [];
 }
 
 

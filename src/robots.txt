@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://bookf29.azurewebsites.net/sitemap.xml
+Sitemap: https://f29agent.azurewebsites.net/sitemap.xml
