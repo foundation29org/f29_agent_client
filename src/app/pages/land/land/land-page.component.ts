@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs/Subscription';
@@ -29,6 +29,8 @@ export class LandPageComponent {
   messagesExpect: string = '';
   messagesExpectOutPut: string = '';
   callingOpenai: boolean = false;
+  @ViewChild('messageTextarea') messageTextarea: ElementRef;
+
   constructor(public translate: TranslateService, public toastr: ToastrService, private openAiService: OpenAiService) {
     this.questions = [
       { value: '¿Qué es la Fundación 29?'},
@@ -37,6 +39,11 @@ export class LandPageComponent {
     ]
   }
 
+  adjustTextareaHeight(event: any): void {
+    const textarea: HTMLTextAreaElement = event.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
 
   selectSuggestion(question) {
     var tempComplex = this.isComplexSearch
@@ -146,6 +153,10 @@ sendMessage() {
   });
   this.statusChange();
   this.search();
+  // Reset the textarea height after sending the message
+  if (this.messageTextarea) {
+    this.messageTextarea.nativeElement.style.height = 'auto';
+  }
 }
 
 private statusChange() {

@@ -74,9 +74,12 @@
                 </div>
                
                 <div class="d-flex align-items-center input-container mt-3 mb-3" *ngIf="!callingOpenai">
-                    <input type="text" [(ngModel)]="message" [disabled]="callingOpenai"
-                        placeholder="{{'generics.Write a message' | translate }}..." (keydown.enter)="sendMessage()"
-                        class="chat-input mt-0 border-0 mr-2 flex-grow-1">
+                    <textarea [(ngModel)]="message" [disabled]="callingOpenai"
+                    placeholder="{{'generics.Write a message' | translate }}..."
+                    (input)="adjustTextareaHeight($event)"
+                    #messageTextarea
+                    class="chat-input mt-0 border-0 mr-2 flex-grow-1" 
+                    rows="1"></textarea>
                     <button class="mr-1 btn btn-primary" style="padding: 0.2rem 0.57rem;" [disabled]="callingOpenai"
                         (click)="sendMessage()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
