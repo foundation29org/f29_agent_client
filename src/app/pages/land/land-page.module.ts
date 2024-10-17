@@ -18,7 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { SafePipe } from 'app/shared/services/safe.pipe';
-
+import { CitationTooltipDirective } from 'app/shared/directives/citation-tooltip.directive';
 
 @NgModule({
     exports: [
@@ -45,7 +45,8 @@ import { SafePipe } from 'app/shared/services/safe.pipe';
     ],
     declarations: [
         LandPageComponent,
-        SafePipe
+        SafePipe,
+        CitationTooltipDirective
     ]
 })
 export class LandPageModule { }

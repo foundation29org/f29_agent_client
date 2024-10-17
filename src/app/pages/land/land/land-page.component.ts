@@ -4,6 +4,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs/Subscription';
 import { OpenAiService } from 'app/shared/services/openAi.service';
 
+interface Message {
+  text: string;
+  isUser: boolean;
+  citations?: Array<{text: string}>;
+}
+
 @Component({
   selector: 'app-land-page',
   templateUrl: './land-page.component.html',
@@ -22,7 +28,7 @@ export class LandPageComponent {
   searchopenai: boolean = false;
   isComplexSearch: boolean = false;
   questions: any = [];
-  messages = [];
+  messages: Message[] = [];
   conversation: any = [];
   message = '';
   private intervalId: any;
@@ -37,6 +43,26 @@ export class LandPageComponent {
       { value: '¿Cuál es la misión de la Fundación 29?'},
       { value: '¿Qué ha ocurrido en la última reunión de la Fundación?'}
     ]
+  }
+
+
+  handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' && event.ctrlKey) {
+      event.preventDefault();
+      this.sendMessage();
+    }
+  }
+
+  processCitations(text: string, citations: Array<{text: string}>): string {
+    return text.replace(/\[(\d+)\]/g, (match, index) => {
+      const citationIndex = parseInt(index, 10);
+      if (citations[citationIndex]) {
+        const citation = citations[citationIndex];
+        return `<span class="citation-number" data-citation-index="${citationIndex}">[${citationIndex}]<span class="tooltip-content">${citation}</span></span>`;
+      }
+      // Si no existe la cita correspondiente, devuelve el marcador original
+      return match;
+    });
   }
 
   adjustTextareaHeight(event: any): void {
@@ -87,7 +113,8 @@ export class LandPageComponent {
               this.callingOpenai = false;
               this.messages.push({
                 text: this.responseLangchain,
-                isUser: false
+                isUser: false,
+                citations: []
               });
               this.conversation.push({"role": "user", "content": this.message})
               this.conversation.push({"role": "assistant", "content": res.choices[0].message.content})
@@ -109,11 +136,12 @@ export class LandPageComponent {
           const regex = /^```html\n|\n```$/g;
           this.responseLangchain = this.responseLangchain.replace(regex, '');
           this.responseLangchain = this.responseLangchain.replace(/【.*?】/g, "");
-
+          console.log(res.citations)
           this.callingOpenai = false;
           this.messages.push({
             text: this.responseLangchain,
-            isUser: false
+            isUser: false,
+            citations: res.citations
           });
           this.conversation.push({"role": "user", "content": this.message})
           this.conversation.push({"role": "assistant", "content": res.data})

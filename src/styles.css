@@ -225,6 +225,35 @@ a:hover, a:focus {
   border-top-right-radius: 0rem;
 }
 
+.citation-number {
+  cursor: pointer;
+  color: #f9423a;
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.tooltip-content {
+  display: none;
+  position: absolute;
+  background-color: #f8f8f8;
+  border: 1px solid #E0E0E0;
+  border-radius: 1rem;
+  padding: 1rem;
+  z-index: 1000;
+  max-width: 350px;
+  max-height: 250px;
+  overflow-y: auto;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+  color: #333;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+
 .color-footer{
   background-color: #ededed;
 }
@@ -488,3 +517,4 @@ mark{
 @import url("../src/assets/css/data-table/icons.css");
 @import url("../src/assets/css/demo.css"); 
 @import "../css/custom.css";*/
+
