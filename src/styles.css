@@ -244,6 +244,7 @@ a:hover, a:focus {
   max-width: 350px;
   max-height: 250px;
   overflow-y: auto;
+  scroll-behavior: smooth;
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -423,6 +424,28 @@ mark{
 
   .ModalClass-sm .modal-dialog {
     max-width: 45% !important;
+  }
+
+  @media (min-width: 768px) {
+    .tooltip-content {
+      max-width: 500px;
+      width: max-content;
+    }
+  
+    .citation-number {
+      position: relative;
+    }
+  }
+
+  @media (min-width: 575px) {
+    .tooltip-content {
+      max-width: 400px;
+      width: max-content;
+    }
+  
+    .citation-number {
+      position: relative;
+    }
   }
 
   @media ( max-width: 991px ){
