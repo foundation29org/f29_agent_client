@@ -1,5 +1,5 @@
 {
-  "name": "Agent F29 client",
+  "name": "agent-f29-client",
   "version": "1.0.0",
   "license": "",
   "scripts": {
@@ -123,5 +123,8 @@
     "ts-node": "8.6.2",
     "tslint": "~6.1.0",
     "typescript": "4.8.2"
+  },
+  "volta": {
+    "node": "16.20.0"
   }
 }

@@ -11,16 +11,6 @@ import { catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, me
 export class OpenAiService {
     constructor(private http: HttpClient, private sortService: SortService) {}
 
-    postOpenAi(info){
-      return this.http.post(environment.api + '/api/callopenai', info)
-      .map((res: any) => {
-        return res;
-      }, (err) => {
-        console.log(err);
-        return err;
-      })
-    }
-
     postOpenAi3(info){
       // return this.http.post('https://langchainraito.azurewebsites.net/api/HttpTrigger2', info)
       return this.http.post(environment.api + '/api/callbook', info)

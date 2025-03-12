@@ -99,57 +99,28 @@ export class LandPageComponent {
     this.subscription.add(this.openAiService.postOpenAi3(query)
       .subscribe((res: any) => {
         console.log(res)
-        if(res.data.indexOf("I don't know") !=-1 || res.data.indexOf("No sé") !=-1 ) {
-          this.searchopenai = true;
-          let value = { value: this.query, isComplexSearch: this.isComplexSearch };
-          this.subscription.add(this.openAiService.postOpenAi(value)
-            .subscribe((res: any) => {
-              this.queryCopy = this.query;
-              this.query = '';
-              this.responseLangchain = res.choices[0].message.content;
-              const regex = /^```html\n|\n```$/g;
-              this.responseLangchain = this.responseLangchain.replace(regex, '');
-              this.responseLangchain = this.responseLangchain.replace(/【.*?】/g, "");
-              this.callingOpenai = false;
-              this.messages.push({
-                text: this.responseLangchain,
-                isUser: false,
-                citations: []
-              });
-              this.conversation.push({"role": "user", "content": this.message})
-              this.conversation.push({"role": "assistant", "content": res.choices[0].message.content})
-              this.message= '';
-              this.sending = false;
-              this.scrollTo();
-            }, (err) => {
-              this.sending = false;
-              console.log(err);
-              this.toastr.error('', this.translate.instant("generics.error try again"));
-
-            }));
-        } else {
-          this.sending = false;
-          console.log('entra')
-          this.queryCopy = this.query;
-          this.query = '';
-          this.responseLangchain = res.data;
-          const regex = /^```html\n|\n```$/g;
-          this.responseLangchain = this.responseLangchain.replace(regex, '');
-          this.responseLangchain = this.responseLangchain.replace(/【.*?】/g, "");
-          console.log(res.citations)
-          this.callingOpenai = false;
-          this.messages.push({
-            text: this.responseLangchain,
-            isUser: false,
-            citations: res.citations
-          });
-          this.conversation.push({"role": "user", "content": this.message})
-          this.conversation.push({"role": "assistant", "content": res.data})
-          this.message= '';
-          console.log(this.sending)
+        this.sending = false;
+        console.log('entra')
+        this.queryCopy = this.query;
+        this.query = '';
+        this.responseLangchain = res.data;
+        const regex = /^```html\n|\n```$/g;
+        this.responseLangchain = this.responseLangchain.replace(regex, '');
+        this.responseLangchain = this.responseLangchain.replace(/【.*?】/g, "");
+        console.log(res.citations)
+        this.callingOpenai = false;
+        this.messages.push({
+          text: this.responseLangchain,
+          isUser: false,
+          citations: res.citations
+        });
+        this.conversation.push({"role": "user", "content": this.message})
+        this.conversation.push({"role": "assistant", "content": res.data})
+        this.message= '';
+        console.log(this.sending)
           //this.scrollTo();
           
-        }
+        
 
       }, (err) => {
         this.sending = false;
